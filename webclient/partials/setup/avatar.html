@@ -1,0 +1,33 @@
+<form name="form" class="form-horizontal">
+	<div class="row-fluid">
+		<h1>Pick an Avatar</h1>		
+	</div>				
+	<div class="row-fluid" ng-repeat="ligne in [0,1,2,3]">
+		<div class="span2" ng-repeat="image in theImages.slice(6*$index,6*$index+6)" style="height:116px">
+			<button ng-click="user.avatar=image" type="button" class="btn" ng-class="{active: user.avatar==image}">
+				<img alt="image" style="width: 100px; height: 100px;" src="images/avatars/{{image}}" class="img-rounded">
+			</button>
+		</div>
+	</div>
+
+	<div class="row-fluid" style="text-align:center">
+		<img style="width: 160px; height: 160px;" src="images/avatars/{{user.avatar}}" class="img-polaroid">
+	</div>
+
+
+			
+
+			
+	<div class="form-actions">
+	    <a href="#/setup/personalInfo" class="btn pull-left">
+	    	<i class="icon-arrow-left">
+	    	</i>
+	    	Back
+	    </a>
+	  	<button ng-click="save()" class="btn btn-success pull-right">
+	  		House model choice
+	  		<i class="icon-arrow-right icon-white">
+	  		</i>
+	  	</a>
+	</div>
+</form>

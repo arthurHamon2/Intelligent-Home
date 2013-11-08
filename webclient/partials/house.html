@@ -1,0 +1,20 @@
+<form name="form" class="form-horizontal">
+	<div class="row-fluid">
+		<h1>My house</h1>
+			{{user}}
+		<div class="row-fluid">
+			<div class="span12">
+				<map name="mapHouse">
+	 				<area href="#/room/{{room.id}}" ng-repeat= "room in user.house.rooms" shape="rect" coords="{{room.xLeft}},{room.yLeft}},{{room.xRight}},{{room.yRight}}" title={{room.title}}>
+				</map>
+				<img class="pull-left" src="images/houses/{{user.house.image}}" style="width:400px; height: 400px;" usemap="#mapHouse"/>
+			</div>
+		</div>
+	</div>	
+	<div class="form-actions">
+		<div class="btn-toolbar">
+		<a href="#/administration" class="btn btn-primary pull-right">
+			<i class="icon-arrow-right icon-white"></i> Administration</a>
+		</div>
+	</div>
+</form>

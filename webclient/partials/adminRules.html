@@ -1,0 +1,364 @@
+<form name="form" class="form-horizontal">
+	<div class="row-fluid">
+		<h1>Rules</h1>
+		<h2>Rules edition on operators</h2>
+	</div>
+{{stopProp()}}
+
+<!--
+	<div class="alert">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		Tests !
+		<br/>
+		SENSORS
+		<br/>
+		{{sensors}}
+		<br/>
+	</div>
+	<div class="alert">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		Tests !
+		<br/>
+		OPERATORS
+		<br/>
+		{{operators}}
+		<br/>
+	</div>
+	<div class="alert">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		Tests !
+		<br/>
+		ROOMS
+		<br/>
+		{{thePieces}}
+		<br/>
+	</div>
+	<div class="alert">
+		ONS de la première pièce
+		<br/>
+		{{theOns(thePieces[0])}}
+		<br>
+		ONS de la 2e pièce
+		<br/>
+		{{theOns(thePieces[1])}}
+	</div>
+	<div class="alert">
+		THENS de la première pièce
+		<br/>
+		{{theThens(thePieces[0])}}
+		<br>
+		THENS de la 2e pièce
+		<br/>
+		{{theThens(thePieces[1])}}
+	</div>
+	<div class="alert">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		Tests !
+		<br/>
+		RULES
+		<br/>
+		{{rules}}
+		<br/>
+	</div>
+	<div class="alert">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		Tests !
+		<br/>
+		ROWS
+		<br/>
+		{{rows}}
+		<br/>
+	</div>
+	<div class="alert">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		Tests !
+		<br/>
+		RULES
+		<br/>
+		{{rules}}
+		<br/>
+	</div>
+	<div class="alert">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		Tests !
+		<br>
+		<br> Test final
+		<br>
+		{{convertRowToRule({"ruleId":1,"ruleName":"T","active":true,"rowOns":[],"rowThens":[]})}}
+	</div> -->
+
+	<div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th style="text-align:right">
+						Name											
+					</th>
+					<th width="60" style="text-align:center">
+						Enable
+					</th>
+					<th style="text-align:center">
+						<div style="background-color:#dee7e">ON</div>
+					</th>
+					<th width="30" style="text-align:center">												
+					</th>
+					<th width="60" style="text-align:center">
+					</th>
+					<th style="text-align:center">
+						<div style="background-color:#dee7e">DO</div>
+					</th>
+					<th width="30" style="text-align:center">
+					</th>
+					<th width="60" style="text-align:center">
+						Delete
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in rows">
+
+					<!-- nommer la règle -->
+					<td>
+						<input type="text" ng-model=row.ruleName placeholder="put a name here" class="input-small pull-right">
+					</td>
+
+					<!-- activer la règle -->
+					<td>
+						<button class="btn btn-block ng-binding" ng-click="switchActive(row)" ng-class="{false: 'btn-inverse', true: 'btn-success'}[row.active]" >
+							<i class="{{{false: 'icon-ban-circle', true: 'icon-ok-circle'}[row.active]}} icon-white"/>
+						</button>
+					</td>
+
+
+					<!-- rowOns -->
+					<td style="text-align:right">
+						<div class="row-fluid" ng-repeat="ligne in [0,1,2,3,4]">
+							<div class="pull-right span3" ng-repeat="rowOn in row.rowOns.slice(5*$index,5*$index+5)" style="width:28px">
+								<div class="btn-group">
+									<button class="btn dropdown-toggle" style="padding:4px;width:28px" role="menu">
+										<img alt="rowOn" style="width: 20px; height: 20px;" src={{rowOn.rowOnInstance.icon}}>
+									</button>
+									<ul class="dropdown-menu pull-right" style="font-size:12px;width:220px">
+										<li style="padding:8px;text-align:right"  data-stopPropagation="true">
+											{{rowOn.rowOnInstance.string}} <br/>({{rowOn.rowOnInstance.sensor.title}})	
+										</li>
+										<li class="divider"/>
+										<li style="padding:8px;text-align:left"  data-stopPropagation="true">											
+											Id : &nbsp {{rowOn.rowOnInstance.id}}
+											<br/>Piece : &nbsp {{rowOn.rowOnInstance.sensor.piece.title}}	
+											<br/>								
+										</li>
+										<li class="divider"/>
+										<li style="padding:8px;text-align:left"  data-stopPropagation="true">
+											<div class="span2" ng-repeat="infSup in theInfSup">
+												<button ng-click="selectOnInfSup(rowOn,infSup)" class="btn" ng-class="{active: infSup==rowOn.rowOnInfSup}">
+													{{infSup.string}}
+												</button>
+											</div>
+											<br>
+											<br>
+											<div>
+											<font size="3">
+												&nbsp &nbsp{{rowOn.rowOnInfSup.string}}&nbsp &nbsp
+											</font>
+											<input type="text" ng-model=rowOn.rowOnValue placeholder="put a value here" style="width:24px" data-stopPropagation="true">
+											<font size="3">
+												&nbsp{{rowOn.rowOnInstance.unit}}
+											</font>
+										</div>
+										</li>
+										<li class="divider"/>
+										<li  data-stopPropagation="true">
+											<a ng-click="deleteOn(row,rowOn)">
+												<i class="icon-trash"/>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+
+
+					</td>
+
+					<!-- ajouter un rowOn -->
+					<td style="text-align:left">
+						<div class="btn-group">
+							<button data-target="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button" style="padding:4px;width:28px">
+								<i class="icon-plus icon-white"/>
+							</button>
+							<ul class="dropdown-menu pull-right">
+								<li class="dropdown-submenu" ng-repeat="piece in thePieces">
+									<a>
+										{{piece.title}}
+									</a>
+									<ul class="dropdown-menu">
+										<li ng-repeat="current in theOns(piece)">
+											<a ng-click="addOn(row,current)">
+												<img style="width: 20px; height: 20px;" src={{current.icon}}>
+												{{current.string}} &nbsp({{current.sensor.title}})
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</td>
+
+					<!-- déco -->
+					<td style="text-align:center">
+						<i class="icon-play"/>
+					</td>
+
+
+					<!-- rowThens -->
+					<td style="text-align:right">
+						<div class="row-fluid" ng-repeat="ligne in [0,1,2,3,4]" style="text-align:right">
+							<div class="pull-right span3" ng-repeat="rowThen in row.rowThens.slice(5*$index,5*$index+5)" style="width:28px">
+								<div class="btn-group">
+									<button class="btn dropdown-toggle" style="padding:4px;width:28px" role="menu">
+										<img alt="rowThen" style="width: 20px; height: 20px;" src={{rowThen.rowThenValue.icon}}>
+									</button>
+									<ul class="dropdown-menu pull-right" style="font-size:12px;width:220px">
+										<li style="padding:8px;text-align:right"  data-stopPropagation="true">
+											{{rowThen.rowThenValue.string}} <br/>({{rowThen.rowThenValue.operator.title}})
+										</li>
+										<li class="divider"/>
+										<li style="padding:8px;text-align:left"  data-stopPropagation="true">
+											Id action : &nbsp {{rowThen.rowThenValue.id}}
+											<br/>Operator id : &nbsp {{rowThen.rowThenInstance.ref}}											
+											<br/>Room : &nbsp {{rowThen.rowThenValue.operator.piece.title}}							
+										</li>
+										<!--
+										<li class="divider"/>
+										<li style="padding:8px;text-align:left"  data-stopPropagation="true">
+											<button ng-click="selectThenValue(rowThen,value)" class="btn" ng-repeat="value in rowThen.rowThenInstance.actions" ng-class="{active: value.id==rowThen.rowThenValue.id}">
+												{{value.title}}
+											</button>
+											
+										</li>
+									-->
+										<li class="divider"/>
+										<li  data-stopPropagation="true">
+											<a ng-click="deleteThen(row,rowThen)">
+												<i class="icon-trash"/>
+											</a>
+										</li>	
+									</ul>
+								</div>
+							</div>
+						</div>
+	            	</td>
+
+
+	            	
+	            	<!-- ajouter un rowThen -->
+					<td style="text-align:left">
+
+						<div class="btn-group">
+							<button data-target="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button" style="padding:4px;width:28px">
+								<i class="icon-plus icon-white"/>
+							</button>
+							<ul class="dropdown-menu pull-right">
+								<li class="dropdown-submenu" ng-repeat="piece in thePieces">
+									<a>
+										{{piece.title}}
+									</a>
+									<ul class="dropdown-menu">
+										<li ng-repeat="current in theThens(piece)">
+											<a ng-click="addThen(row,current)">
+												<img style="width: 20px; height: 20px;" src={{current.action.icon}}>
+												{{current.action.string}} &nbsp({{current.operator.title}})
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+					</td>
+
+
+					
+					<!-- supprimer la règle -->
+					<td style="text-align:center">
+						<button data-target="#" class="btn btn-danger btn-block"  ng-click="deleteRow(row)" type="button">
+							<i class="icon-trash icon-white"/>
+						</button>
+					</td>		
+
+				</tr>
+
+
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+
+				<!-- Ajout de règle, activation et suppression globale -->
+				<tr>
+					<td style="text-align:right">
+						<button data-target="#" class="btn btn-warning"  ng-click="addEmptyRule()" ng-mouseover="" type="button" style="width:100px">
+							<i class="icon-plus icon-white"/>
+							&nbsp Add
+						</button>
+					</td>
+					<td>
+						<button data-target="#" class="btn btn-inverse btn-block"  ng-click="deactivateAllRules()" ng-mouseover="" type="button" class="btn">
+							<i class="icon-ban-circle icon-white"/>
+							All
+						</button>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+						<button data-target="#" class="btn btn-danger btn-block"  ng-click="deleteAllRules()" ng-mouseover="" type="button" class="btn">
+							<i class="icon-trash icon-white"/>
+							All
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Modal header</h3>
+	  </div>
+	  <div class="modal-body">
+	    <p>One fine body…</p>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	    <button class="btn btn-primary">Save changes</button>
+	  </div>
+	</div>
+
+	<div class="form-actions">
+		<a href="#/administration" class="btn pull-left">
+			<i class="icon-arrow-left"/>
+			&nbsp Back
+		</a>
+		<button class="btn btn-success pull-right" ng-click="save()">
+			<i class="icon-check icon-white"/>
+			&nbsp Save modifications
+		</button>
+	</div>
+</form>

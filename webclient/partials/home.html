@@ -1,0 +1,28 @@
+<div class="hero-unit">
+    <h1>GHOME</h1>
+</div>
+<div class="row-fluid">
+	<div class="span6" style="text-align:center">
+	<h2>Welcome {{user.login}} !</h2>
+		<img src="images/avatars/{{user.avatar}}" class="img-polaroid" />
+	</div>
+	<div class="span6">
+		<h2>Your house</h2>
+					<div class="row-fluid">
+             <a href="#/room/" class="btn btn-block">Sensors available</a>
+	</div>
+		<div class="row-fluid" style="text-align:center">
+
+			<div class="span12" style="text-align:center">
+				<map name="mapHouse">
+	 				<area href="#/room/{{room.id}}" ng-repeat= "room in user.house.rooms" shape="rect" coords="{{room.xLeft}},{room.yLeft}},{{room.xRight}},{{room.yRight}}" title={{room.title}}>
+				</map>
+				<img class="pull-left" src="images/houses/{{user.house.image}}" style="width:400px; height: 400px;" usemap="#mapHouse"/>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+

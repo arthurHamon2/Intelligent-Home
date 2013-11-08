@@ -1,0 +1,45 @@
+<form name="form" class="form-horizontal">
+		<div class="row-fluid">
+		<h1>Operators</h1>
+		</div>
+			<div class="row-fluid" ng-repeat="operator in operators">
+				<div class="span1">
+					<img src="images/operators/{{operator.type.image}}" style=" height: 64px;"/>
+				</div>
+				<div class="span11">
+					<h4>{{operator.title}} <small>{{operator.type.title}}</small></h4>
+					
+				</div>
+			</div>
+
+			<div class="row-fluid">
+					<h2>Add an operator</h2>
+			</div>
+			<div class="row-fluid">
+					<input ng-model="newOp.title" class="span2" type="text" placeholder="Name">
+					<input ng-model="newOp.ref" class="span2" type="text" placeholder="Reference">
+					<input ng-model="newOp.description" type="text" placeholder="Description">
+					<div class="btn-group">
+		                <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">{{newOp.type.title}} <span class="caret"></span></button>
+		                <ul class="dropdown-menu">
+		                  <li  ng-repeat="operatorType in operatorTypes"><a ng-click="newOp.type=operatorType">{{operatorType.title}}</a></li>
+		                </ul>
+		            </div>
+		            <div class="btn-group">
+		                <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">{{newOp.room.title}} <span class="caret"></span></button>
+		                <ul class="dropdown-menu">
+		                  <li  ng-repeat="room in user.house.rooms"><a ng-click="newOp.room = room">{{room.title}}</a></li>
+		                </ul>
+		            </div>
+					<button class="btn btn-success" type="button" ng-click="putOp()" ng-disabled="newOp.room.id==null || newOp.type==null || newOp.title==null">Add</button>
+			</div>
+
+
+	<div class="form-actions">
+		<div class="btn-toolbar">
+			<button  class="btn btn-success" ng:click="fetch()"><i class="icon-refresh"></i> Reload</button >
+			<a href="#/" class="btn pull-left">
+			<i class="icon-arrow-left"></i> Back</a>
+		</div>
+	</div>
+</form>

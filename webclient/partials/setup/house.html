@@ -1,0 +1,20 @@
+<form name="form" class="form-horizontal">
+	<div class="row-fluid">
+		<h1>Pick your house</h1>
+	</div>
+	<div class="row-fluid">
+	<div class="span2" ng-repeat="house in houses">
+			<button ng-click="user.house=house" ng-mouseover="navMouseOver($house.id)" type="button" class="btn" ng-class="{active: user.house.id==house.id}">
+				<img src="images/houses/{{house.image}}" />
+			</button>	
+	</div>	
+</div>
+	<div class="form-actions">
+		<a href="#/setup/avatar" class="btn pull-left"><i class="icon-arrow-left"></i> Back</a>
+	  		<button ng-click="save()" class="btn btn-success pull-right">
+				Rename house rooms
+				<i class="icon-arrow-right icon-white"></i>
+			</button>
+		</a>
+	</div>
+</form>

@@ -1,0 +1,111 @@
+	<div class="row-fluid">
+			<h1>Administration page</h1>
+			<h2>Sensors detections</h2>
+	</div>
+	<div>
+
+	</div>
+	<div>	
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th width="5%">
+						ID
+					</th>
+					<th width="25%">
+						Name
+					</th>
+					<th width="30%">
+						Type
+					</th>
+					<th width="30%">
+                        Room
+						<div class="btn-group">
+				            <button class="btn dropdown-toggle" data-toggle="dropdown">
+				            	{{selectedRoom.title}}
+				            	<span class="caret"/>
+				            </button>
+				            <ul class="dropdown-menu">
+				                <li><a>{{selectedRoom.title}}</a></li>
+				                <li class="divider"/>
+				                <li><a ng-click="selectedRoom.title = 'Toutes'">All</a></li>
+				              	<li ng-repeat="room in houses[user.house.id].rooms">
+				              		<a ng-click="selectedRoom.title = room.title">
+				              			{{room.title}}
+				              		</a>
+				              	</li>
+				            </ul>
+	             		</div>
+					</th>
+					<th>
+						Enable
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+                <tr ng-repeat="sensor in sensors | filter:{true: '', false: selectedRoom.title}[selectedRoom.title == 'Toutes']">
+					<td>
+						{{sensor.ref}}
+					</td>	
+					<td>
+						<input type="text" ng-model=sensor.title placeholder={{sensor.type.title}}>
+					</td>
+					<td>
+                        <span style="display: {{ {false: 'inline', true: 'none'}[sensor.type.title == 'Unknow Sensor'] }};">{{sensor.type.title}}</span>
+                        <div class="btn-group" style="display: {{ {true: 'inline', false: 'none'}[sensor.type.title == 'Unknow Sensor'] }};">
+				            <button class="btn dropdown-toggle" data-toggle="dropdown">
+				            	{{sensor.type.title}}
+				            	<span class="caret"/>
+				            </button>
+				            <ul class="dropdown-menu">
+				                <li>
+				                	<a>
+				                		{{sensor.type.title}}
+				                	</a>
+				                </li>
+				                <li class="divider"/>
+				              	<li ng-repeat="type in sensorTypes"><a ng-click="sensor.type=type">{{type.title}}</a></li>
+				            </ul>
+	             		</div>
+	            	</td>
+					<td>
+						<div class="btn-group">
+				            <button class="btn dropdown-toggle" data-toggle="dropdown">
+				            	{{sensor.room.title}}
+				            	<span class="caret"/>
+				            </button>
+				            <ul class="dropdown-menu">
+				                <li>
+				                	<a>
+				                		{{sensor.room.title}}
+				                	</a>
+				                </li>
+				                <li class="divider"/>
+				              	<li ng-repeat="room in rooms">
+				              		<a ng-click="sensor.room = room;save(sensor)">
+				              			{{room.title}}
+				              		</a>
+				              	</li>
+				            </ul>
+	             		</div>
+					</td>
+					<td>
+						<button class="btn ng-binding" ng-click="sensor.installed=!sensor.installed;save(sensor)" ng-class="{false: 'btn-inverse', true: 'btn-warning'}[sensor.installed]" >
+							{{ {true: 'Oui', false: 'Non'}[sensor.installed] }}
+						</button>
+					</td>			
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="form-actions">
+		<a href="#" class="btn pull-left">
+			<i class="icon-home"/>
+			Main menu
+		</a>
+
+		<a  data-target="#" class="btn btn-primary pull-right"  ng-click="fetch()">
+			<i class="icon-refresh icon-white"/>
+			Sensors detection
+		</a>
+	</div>

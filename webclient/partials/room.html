@@ -1,0 +1,87 @@
+<form name="form" class="form-horizontal">
+	<div class="row-fluid">
+	<div class="span12 well">
+        <h2>Room : </h2>
+        <div class="btn-toolbar" style="text-align: center;">
+                    <a class="btn btn-primary" ng-click="selectedRoom.title = 'Toutes'" ng-class="{active: selectedRoom.title == 'Toutes'}">
+                        All
+                    </a>
+                    <a class="btn" ng-repeat="room in user.house.rooms" ng-click="selectedRoom.title = room.title" ng-class="{active: selectedRoom.title == room.title}">
+                        {{room.title}}
+                    </a>
+
+
+    	</div>
+    	</div>
+	</div>
+	<div class="row-fluid">
+		<h1>Sensors</h1>
+	</div>
+			<div class="row-fluid" ng-repeat="sensor in sensors | filter:{true: '', false: selectedRoom.title}[selectedRoom.title == 'Toutes']">
+                <div class="span1">
+                    <img class="pull-right" src="images/sensors/{{sensor.type.image}}" style=" height: 64px;"/>
+                </div>
+                <div class="span11">
+                    <h2>{{ sensor.title }} <small>{{ sensor.type.title }}</small>
+                </div>
+                <div class="row-fluid" ng-repeat="measure in sensor.measures">
+                    <div class="row-fluid span11 offset1">
+                        <div class="span12">
+                            {{measure.nom}} : {{showMeasure(measure)}}<br>
+                            <button class="btn btn-warning" ng-click="setAlarm(measure.value)" ng-show="measure.nom == 'Heure_Reveil'">Activer le réveil </button>
+                        
+                            <button class="btn btn-info" ng-click="graphShow[measure.id]=!graphShow[measure.id]" ng-show="measure.history.length > 0 && measure.unity !='Time'">Historique <i class="caret"></i></button> <!-- TODO : faire hide/show des measures sur le click sur le titre du capteur -->
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div gh-bargraph="measure" ng-show="graphShow[measure.id]"></div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			
+		<hr>
+		<div class="row-fluid">
+		<h1>Operators</h1>
+		</div>
+			<div class="row-fluid" ng-repeat="operator in operators | filter:{true: '', false: selectedRoom.title}[selectedRoom.title == 'Toutes']">
+			<div class="row-fluid">
+				<div class="span1">
+					<img src="images/operators/{{operator.type.image}}" style=" height: 64px;"/>
+				</div>
+				<div class="span11">
+					<h4>{{operator.title}} <small>{{operator.type.title}}</small></h4>
+					<button class="btn btn-info" ng-click="operator.showGraph=!operator.showGraph" ng-show="operator.history.length > 0">History <i class="caret"></i></button>	
+					<div class="btn-toolbar">
+						<button ng-repeat="action in operator.actions" class="btn ng-binding" ng:click="executeAction(operator.ref,action.id)" >
+							{{ action.description }}
+						</button>
+					</div>
+				</div>
+				<hr>
+			</div>
+			<div class="row-fluid">
+				<div class="span12" ng-show="operator.showGraph">
+					<ul>
+						<li ng-repeat="action in operator.history"><i>{{action.executedAt}}</i> : {{action.description}}</li>
+					</ul>
+				</div>
+			</div>
+			</div>
+
+
+				<div class="row-fluid">
+				<div class="span12">
+					<div id="chart_div" style="width:600; height:300"></div>
+				</div>
+			</div>
+
+	<div class="form-actions">
+		<div class="btn-toolbar">
+			<button  class="btn btn-success" ng:click="fetch()"><i class="icon-refresh"></i> Reload</button >
+			<a href="#/" class="btn pull-left">
+			<i class="icon-arrow-left"></i> Back</a>
+		</div>
+	</div>
+</form>

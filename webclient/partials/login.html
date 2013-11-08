@@ -1,0 +1,21 @@
+<form name="form" class="form-horizontal">
+	<div class="row-fluid">
+		<div class="span4 offset4 well">
+			<h2>Sign in</h2>
+			
+				<div class="control-group" style="text-align:center;">
+				      <input class="input-block-level" type="text" min="0" name="id" ng-model="d.login" placeholder="login" required/> 
+				</div>
+				<div class="control-group" style="text-align:center;">
+				      <input class="input-block-level" type="password" name="password" ng-model="d.password" placeholder="password" required/> 
+				</div>
+				<small><a ng-click="pop=true;d.login='admin';d.password=1234;" >First log in ?</a></small>
+				<div class="alert" ng-show="pop">The default user/password have been filled.</div>
+			<button ng-click="login()" class="btn btn-success btn-block">
+				Sign in
+				<i class="icon-arrow-right icon-white"/>
+			</button>
+			
+		</div>
+	</div>		
+</form>

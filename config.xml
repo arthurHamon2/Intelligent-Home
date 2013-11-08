@@ -1,0 +1,12 @@
+<Config>
+<AnOceanNetConfiguration>
+    <ipAnOceanGateway>localhost</ipAnOceanGateway>
+    <portAnOceanGateway>5000</portAnOceanGateway>
+</AnOceanNetConfiguration>
+<MailConfiguration>
+    <mailUserServer>ghomepowerhouse@gmail.com</mailUserServer>
+    <mailPassword>GHOME2013</mailPassword>
+    <mailHost>smtp.gmail.com</mailHost>
+    <mailPort>587</mailPort>
+</MailConfiguration>
+</Config>
