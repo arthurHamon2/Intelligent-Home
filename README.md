@@ -47,8 +47,9 @@ For instance, we could state that when the temperature in room 1 is under 10 and
 
 Technologies used
 -----------------
-* Front-end: Java, Servlet, Antlr, Jetty and SQLlite as the database.
-* Back-end: HTML, Twitter Bootstrap, Javascript and AngularJS.
+* Database: SQLite
+* Back-end: Java, Servlet, Antlr.
+* Front-end: HTML, Bootstrap and AngularJS.
 
 Play with the project
 =====================
